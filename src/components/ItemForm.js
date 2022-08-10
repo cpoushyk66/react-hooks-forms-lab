@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { v4 as uuid } from "uuid";
 
-function ItemForm(props) {
+function ItemForm({onItemFormSubmit}) {
+
+  const [selectValue, setSelectValue] = useState("Produce");
+
+  function handleSelectChange(event) {
+    setSelectValue(event.target.value);
+  }
+
+  function handleFormSubmit(event) {
+    event.preventDefault()
+    const newItem = {
+      id: uuid(),
+      name: event.target.name.value,
+      category: selectValue
+    };
+    console.log(newItem)
+    onItemFormSubmit(newItem)
+
+    event.target.reset()
+  }
+
   return (
-    <form className="NewItem">
+    <form onSubmit={handleFormSubmit}className="NewItem">
       <label>
         Name:
         <input type="text" name="name" />
@@ -11,7 +31,7 @@ function ItemForm(props) {
 
       <label>
         Category:
-        <select name="category">
+        <select onChange={handleSelectChange} name="category">
           <option value="Produce">Produce</option>
           <option value="Dairy">Dairy</option>
           <option value="Dessert">Dessert</option>
