@@ -11,13 +11,21 @@ function ItemForm({onItemFormSubmit}) {
 
   function handleFormSubmit(event) {
     event.preventDefault()
-    const newItem = {
-      id: uuid(),
-      name: event.target.name.value,
-      category: selectValue
-    };
-    console.log(newItem)
-    onItemFormSubmit(newItem)
+
+    if (event.target.name.value != '')
+    {
+      const newItem = {
+        id: uuid(),
+        name: event.target.name.value,
+        category: selectValue
+      };
+      console.log(newItem)
+      onItemFormSubmit(newItem)
+    }
+    else
+    {
+      alert("Name needed!")
+    }
 
     event.target.reset()
   }
